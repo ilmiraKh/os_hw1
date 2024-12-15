@@ -1,0 +1,32 @@
+#! /usr/bin/python3
+
+import os
+import sys
+import random
+
+n = int(sys.argv[1])
+pid = os.getpid()
+children = []
+
+def child_process(append):
+	child = os.fork()
+	if child == 0:
+		print(f'Gru[{pid}]: process created. PID {os.getpid()}.')
+		s = random.randint(5, 10)
+		os.execve('./minion', ['./minion', str(s)], os.environ)
+	else:
+		if append:
+			children.append(child)
+
+for i in range(n):
+	child_process(True)
+
+for i in children:
+	status = 1
+	while status != 0:
+		child_pid, status = os.wait()
+		status = status >> 8
+		print(f'Gru[{pid}]: process terminated. PID {child_pid}. Exit status {status}.')
+		if status != 0:
+			child_process(False)
+
