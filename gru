@@ -11,7 +11,7 @@ children = []
 def child_process(append):
 	child = os.fork()
 	if child == 0:
-		print(f'Gru[{pid}]: process created. PID {os.getpid()}.')
+		print(f'Gru[{pid}]: process created. PID {os.getpid()}.', flush = True)
 		s = random.randint(5, 10)
 		os.execve('./minion', ['./minion', str(s)], os.environ)
 	else:
@@ -26,7 +26,7 @@ for i in children:
 	while status != 0:
 		child_pid, status = os.wait()
 		status = status >> 8
-		print(f'Gru[{pid}]: process terminated. PID {child_pid}. Exit status {status}.')
+		print(f'Gru[{pid}]: process terminated. PID {child_pid}. Exit status {status}.', flush = True)
 		if status != 0:
 			child_process(False)
 

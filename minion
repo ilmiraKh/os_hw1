@@ -7,11 +7,11 @@ import random
 
 ppid = os.getppid()
 pid = os.getpid()
-print(f'Minion[{pid}]: created. Parent PID {ppid}.')
+print(f'Minion[{pid}]: created. Parent PID {ppid}.', flush = True)
 s = int(sys.argv[1])
 time.sleep(s)
 status = random.randint(0, 1)
-print(f'Child[{pid}]: before terminated. Parent PID {ppid}. Exit status {status}.')
+print(f'Child[{pid}]: before terminated. Parent PID {ppid}. Exit status {status}.', flush = True)
 os._exit(status)
 
 
